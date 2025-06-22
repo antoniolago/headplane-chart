@@ -65,6 +65,16 @@ jobs:
           echo "✓ Using existing dependencies"
         fi
 
+    - name: Copy test templates
+      run: |
+        echo "=== Copying test templates ==="
+        if [ -d "test/templates" ]; then
+          cp -r test/templates/* templates/
+          echo "✓ Test templates copied successfully"
+        else
+          echo "No test templates directory found"
+        fi
+
     - name: Generate templates
       id: generate
       run: |

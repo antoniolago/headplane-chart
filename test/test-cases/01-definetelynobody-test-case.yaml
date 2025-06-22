@@ -6,7 +6,7 @@ headplane:
     server:
       cookie_secret: "test-cookie-secret-12345"
   oidc:
-    client_id: "test-headplane-client-id"
+    # client_id: "test-headplane-client-id"
     enabled: true
     issuer: "https://auth.test.example.com"
     redirect_uri: "https://headplane.test.example.com/admin/oidc/callback"
