@@ -9,7 +9,7 @@ headplane:
   oidc:
     client_id: "test-headplane-client-id"
     enabled: true
-    issuer: "https://auth.test.example.com"
+    issuer: "http://mock-oidc-server"
     redirect_uri: "https://headplane.test.example.com/admin/oidc/callback"
 headscale:
   config:
@@ -22,6 +22,6 @@ headscale:
       method: S256
     client_id: "test-headscale-client-id"
     enabled: true
-    issuer: "https://auth.test.example.com"
+    issuer: "http://mock-oidc-server"
 pvc:
   storageClassName: "test-class-sc"
