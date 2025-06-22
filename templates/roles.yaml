@@ -57,4 +57,4 @@ rules:
     verbs: ["create"]
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["create", "get"]
+    verbs: ["create", "get", "update", "patch"]
