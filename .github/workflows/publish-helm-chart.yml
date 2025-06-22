@@ -374,6 +374,7 @@ jobs:
 
   publish:
     if: startsWith(github.ref, 'refs/tags/')
+    needs: [setup, test]
     runs-on: ubuntu-latest
     permissions:
       contents: read
