@@ -19,5 +19,3 @@ headscale:
     client_id: "test-headscale-client-id"
     enabled: true
     issuer: "https://auth.test.example.com"
-pvc:
-  storageClassName: "test-class-sc"
