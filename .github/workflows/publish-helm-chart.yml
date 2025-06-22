@@ -300,13 +300,15 @@ jobs:
             for pod in $non_running_pods; do
               pod_status=$(kubectl get pod -n "$namespace" "$pod" -o jsonpath='{.status.phase}')
               
-              # Only fail if the pod is in a failed state, not if it's still pending
+              # Only fail if the pod is in a failed state, not if it's still pending or succeeded
               if [ "$pod_status" = "Failed" ] || [ "$pod_status" = "Error" ] || [ "$pod_status" = "CrashLoopBackOff" ]; then
                 should_fail=true
                 echo "[$test_name] Pod $pod has failed status: $pod_status"
                 kubectl logs -n "$namespace" "$pod" --all-containers --tail=10 || echo "No logs available for $pod"
               elif [ "$pod_status" = "Pending" ]; then
                 echo "[$test_name] Pod $pod is still pending - normal during startup"
+              elif [ "$pod_status" = "Succeeded" ]; then
+                echo "[$test_name] Pod $pod has succeeded - this is expected for completed jobs"
               else
                 echo "[$test_name] Pod $pod has unexpected status: $pod_status"
                 should_fail=true
