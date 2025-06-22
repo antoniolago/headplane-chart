@@ -35,6 +35,16 @@ spec:
       containers:
       - name: headplane
         image: {{ .Values.headplane.image }}
+        command:
+          - /bin/sh
+          - -c
+          - |
+            {{- if .Values.headplane.oidc.enabled }}
+            echo "Waiting for headscale-generate-token job to complete..."
+            kubectl wait --for=condition=complete job/headscale-generate-token -n {{ .Release.Namespace }} --timeout=300s
+            echo "Job completed successfully, starting headplane..."
+            {{- end }}
+            exec node /app/build/server/index.js
         envFrom:
           {{- if .Values.headplane.oidc.enabled }}
           - secretRef:
