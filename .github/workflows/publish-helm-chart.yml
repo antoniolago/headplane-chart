@@ -248,10 +248,12 @@ jobs:
               kubectl get pods -n "$namespace" | grep -E "Error|CrashLoopBackOff|ImagePullBackOff|Terminating"
               echo -e "\n[$test_name] Pod Events:"
               kubectl get events -n "$namespace" --sort-by='.lastTimestamp' | grep -E "Error|Warning|Failed"
-              echo -e "\n[$test_name] Pod Details:"
+              echo -e "\n[$test_name] Pod Details and Logs:"
               for pod in $(kubectl get pods -n "$namespace" -o jsonpath='{.items[*].metadata.name}'); do
                 echo -e "\n[$test_name] === $pod ==="
                 kubectl describe pod -n "$namespace" "$pod" | grep -A 10 "Events:"
+                echo -e "\n[$test_name] === $pod logs ==="
+                kubectl logs -n "$namespace" "$pod" --all-containers || echo "No logs available for $pod"
               done
               exit 1
             fi
