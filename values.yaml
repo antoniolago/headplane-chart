@@ -14,7 +14,7 @@ headplane:
     # OIDC redirect URI
     redirect_uri: "https://your-headplane-admin-domain.com/admin/oidc/callback"
     # OIDC client ID
-    client_id: "REPLACE_IT_WITH_YOUR_OIDC_CLIENT_ID_FOR_HEADPLANE"
+    # client_id: "REPLACE_IT_WITH_YOUR_OIDC_CLIENT_ID_FOR_HEADPLANE" #USE secret below instead
     # Name of the secret containing OIDC credentials
     secret_name: "oidc-secrets"
   config:

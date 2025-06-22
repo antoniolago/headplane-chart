@@ -23,7 +23,13 @@ spec:
                 sleep 1
               done
 
-              echo "Generating Headscale API token..."
+              echo "Checking if Secret 'headscale-api-token' exists..."
+              if kubectl get secret headscale-api-token -n {{ .Release.Namespace }} >/dev/null 2>&1; then
+                echo "Secret already exists. Skipping token generation."
+                exit 0
+              fi
+
+              echo "Secret not found. Generating Headscale API token..."
               TOKEN=$(kubectl -n {{ .Release.Namespace }} exec -i headplane-0 -c headscale -- headscale apikeys create -e 100y)
 
               if [ -z "$TOKEN" ]; then
@@ -31,15 +37,5 @@ spec:
                 exit 1
               fi
 
-              echo "Updating headplane-config secret with generated API token..."
-              
-              # Get the current config from the secret
-              CURRENT_CONFIG=$(kubectl get secret headplane-config -n {{ .Release.Namespace }} -o jsonpath='{.data.config\.yaml}' | base64 -d)
-              
-              # Replace the placeholder API key with the real one
-              UPDATED_CONFIG=$(echo "$CURRENT_CONFIG" | sed "s/headscale_api_key: \"hcap_placeholder_key_for_validation_only_12345678901234567890123456789012\"/headscale_api_key: \"$TOKEN\"/")
-              
-              # Update the secret with the new config
-              echo "$UPDATED_CONFIG" | kubectl create secret generic headplane-config --from-file=config.yaml=/dev/stdin -n {{ .Release.Namespace }} --dry-run=client -o yaml | kubectl apply -f -
-              
-              echo "Successfully updated headplane-config secret with real API token"
+              echo "Creating Kubernetes Secret..."
+              kubectl create secret generic headscale-api-token --from-literal=HEADPLANE_OIDC__HEADSCALE_API_KEY="$TOKEN" -n {{ .Release.Namespace }}
