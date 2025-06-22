@@ -274,39 +274,39 @@ jobs:
             fi
           done
           
-          # if [ "$deployments_ready" = true ] && [ "$jobs_completed" = true ] && [ "$containers_ready" = true ]; then
-          #   echo "[$test_name] All deployments are ready, all jobs are completed, and all containers are ready!"
+          if [ "$deployments_ready" = true ] && [ "$jobs_completed" = true ] && [ "$containers_ready" = true ]; then
+            echo "[$test_name] All deployments are ready, all jobs are completed, and all containers are ready!"
             
-          #   # Verify API key replacement if OIDC is enabled
-          #   if kubectl get secret headplane-config -n "$namespace" >/dev/null 2>&1; then
-          #     CONFIG_CONTENT=$(kubectl get secret headplane-config -n "$namespace" -o jsonpath='{.data.config\.yaml}' | base64 -d)
+            # # Verify API key replacement if OIDC is enabled
+            # if kubectl get secret headplane-config -n "$namespace" >/dev/null 2>&1; then
+            #   CONFIG_CONTENT=$(kubectl get secret headplane-config -n "$namespace" -o jsonpath='{.data.config\.yaml}' | base64 -d)
               
-          #     # Only verify API key replacement if OIDC is enabled
-          #     if echo "$CONFIG_CONTENT" | grep -q "oidc:"; then
-          #       echo "[$test_name] Verifying API key replacement in headplane-config secret..."
+            #   # Only verify API key replacement if OIDC is enabled
+            #   if echo "$CONFIG_CONTENT" | grep -q "oidc:"; then
+            #     echo "[$test_name] Verifying API key replacement in headplane-config secret..."
                 
-          #       if echo "$CONFIG_CONTENT" | grep -q "headscale_api_key:"; then
-          #         API_KEY=$(echo "$CONFIG_CONTENT" | grep "headscale_api_key:" | sed 's/.*headscale_api_key: "\([^"]*\)".*/\1/')
+            #     if echo "$CONFIG_CONTENT" | grep -q "headscale_api_key:"; then
+            #       API_KEY=$(echo "$CONFIG_CONTENT" | grep "headscale_api_key:" | sed 's/.*headscale_api_key: "\([^"]*\)".*/\1/')
                   
-          #         if [[ "$API_KEY" != "hcap_placeholder_key_for_validation_only_12345678901234567890123456789012" ]] && [[ -n "$API_KEY" ]]; then
-          #           echo "[$test_name] ✅ API key successfully replaced with real token: ${API_KEY:0:20}..."
-          #         else
-          #           echo "[$test_name] ❌ API key replacement verification failed"
-          #           echo "[$test_name] Current API key: $API_KEY"
-          #           echo "[$test_name] Expected: Real API token (not placeholder)"
-          #           exit 1
-          #         fi
-          #       else
-          #         echo "[$test_name] ❌ No headscale_api_key found in config"
-          #         exit 1
-          #       fi
-          #     else
-          #       echo "[$test_name] OIDC not enabled, skipping API key verification"
-          #     fi
-          #   fi
+            #       if [[ "$API_KEY" != "hcap_placeholder_key_for_validation_only_12345678901234567890123456789012" ]] && [[ -n "$API_KEY" ]]; then
+            #         echo "[$test_name] ✅ API key successfully replaced with real token: ${API_KEY:0:20}..."
+            #       else
+            #         echo "[$test_name] ❌ API key replacement verification failed"
+            #         echo "[$test_name] Current API key: $API_KEY"
+            #         echo "[$test_name] Expected: Real API token (not placeholder)"
+            #         exit 1
+            #       fi
+            #     else
+            #       echo "[$test_name] ❌ No headscale_api_key found in config"
+            #       exit 1
+            #     fi
+            #   else
+            #     echo "[$test_name] OIDC not enabled, skipping API key verification"
+            #   fi
+            # fi
             
-          #   break
-          # fi
+            break
+          fi
           
           # Check for any failed pods
           if kubectl get pods -n "$namespace" | grep -q "Error\|CrashLoopBackOff\|ImagePullBackOff\|Terminating\|Failed"; then
