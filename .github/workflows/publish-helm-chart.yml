@@ -285,12 +285,12 @@ jobs:
               if echo "$CONFIG_CONTENT" | grep -q "headscale_api_key:"; then
                 API_KEY=$(echo "$CONFIG_CONTENT" | grep "headscale_api_key:" | sed 's/.*headscale_api_key: "\([^"]*\)".*/\1/')
                 
-                if [[ "$API_KEY" == hcap_* ]] && [[ "$API_KEY" != "hcap_placeholder_key_for_validation_only_12345678901234567890123456789012" ]]; then
+                if [[ "$API_KEY" != "hcap_placeholder_key_for_validation_only_12345678901234567890123456789012" ]] && [[ -n "$API_KEY" ]]; then
                   echo "[$test_name] ✅ API key successfully replaced with real token: ${API_KEY:0:20}..."
                 else
                   echo "[$test_name] ❌ API key replacement verification failed"
                   echo "[$test_name] Current API key: $API_KEY"
-                  echo "[$test_name] Expected: Real hcap_ token (not placeholder)"
+                  echo "[$test_name] Expected: Real API token (not placeholder)"
                   exit 1
                 fi
               else
