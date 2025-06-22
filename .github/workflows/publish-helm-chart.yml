@@ -175,16 +175,6 @@ jobs:
         echo "Applying resources..."
         helm template rybbit . -f "${{ matrix.test-file }}" --namespace "$namespace" | kubectl apply -f - -n "$namespace"
         
-        # Handle headscale-api-token secret dependency
-        echo "Checking for headscale-api-token secret dependency..."
-        if kubectl get secret headscale-api-token -n "$namespace" >/dev/null 2>&1; then
-          echo "headscale-api-token secret already exists"
-        else
-          echo "Creating temporary headscale-api-token secret to allow pod startup..."
-          kubectl create secret generic headscale-api-token --from-literal=HEADPLANE_OIDC__HEADSCALE_API_KEY="temporary-token" -n "$namespace"
-          echo "Temporary secret created - will be replaced by job when headscale is ready"
-        fi
-        
         # Give resources time to start scheduling
         echo "Waiting for resources to start scheduling..."
         sleep 3

@@ -2,9 +2,6 @@ headplane:
   config:
     headscale:
       url: "https://vpn.test.example.com"
-  secret:
-    server:
-      cookie_secret: "test-cookie-secret-12345678901234567890123456789012"
   oidc:
     # client_id: "test-headplane-client-id"
     enabled: true
