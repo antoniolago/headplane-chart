@@ -2,6 +2,8 @@ name: Helm Chart CI/CD
 
 on:
   push:
+    branches:
+      - '**'
     tags:
       - 'v*'
   workflow_dispatch:
