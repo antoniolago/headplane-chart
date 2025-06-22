@@ -224,7 +224,7 @@ jobs:
               pod_status=$(kubectl get pod -n "$namespace" "$pod" -o jsonpath='{.status.phase}')
               if [ "$pod_status" = "Pending" ] || [ "$pod_status" = "Unknown" ]; then
                 echo "[$test_name] === Proactive log capture for $pod (status: $pod_status) ==="
-                kubectl describe pod -n "$namespace" "$pod"
+                # kubectl describe pod -n "$namespace" "$pod"
                 kubectl logs -n "$namespace" "$pod" --all-containers || echo "No logs available for $pod"
               fi
             done
