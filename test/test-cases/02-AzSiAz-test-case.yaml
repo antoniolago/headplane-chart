@@ -5,12 +5,13 @@ headplane:
       url: "https://vpn.test.example.com"
   secret:
     server:
-      cookie_secret: "test-cookie-secret-12345"
+      cookie_secret: "test-cookie-secret-12345678901234567890123456789012"
   oidc:
     client_id: "test-headplane-client-id"
     enabled: true
     issuer: "http://mock-oidc-server"
     redirect_uri: "https://headplane.test.example.com/admin/oidc/callback"
+    headscale_api_key: "test-headscale-api-key"
 headscale:
   config:
     server_url: "https://vpn.test.example.com"
