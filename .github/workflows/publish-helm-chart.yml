@@ -280,7 +280,7 @@ jobs:
             # # Verify API key replacement if OIDC is enabled
             # if kubectl get secret headplane-config -n "$namespace" >/dev/null 2>&1; then
             #   CONFIG_CONTENT=$(kubectl get secret headplane-config -n "$namespace" -o jsonpath='{.data.config\.yaml}' | base64 -d)
-              
+                
             #   # Only verify API key replacement if OIDC is enabled
             #   if echo "$CONFIG_CONTENT" | grep -q "oidc:"; then
             #     echo "[$test_name] Verifying API key replacement in headplane-config secret..."

@@ -29,7 +29,7 @@ spec:
                 exit 0
               fi
 
-              echo "Secret not found. Generating Headscale API token..."
+              echo "Generating Headscale API token..."
               TOKEN=$(kubectl -n {{ .Release.Namespace }} exec -i headplane-0 -c headscale -- headscale apikeys create -e 100y)
 
               if [ -z "$TOKEN" ]; then
@@ -37,5 +37,7 @@ spec:
                 exit 1
               fi
 
-              echo "Creating Kubernetes Secret..."
-              kubectl create secret generic headscale-api-token --from-literal=HEADPLANE_OIDC__HEADSCALE_API_KEY="$TOKEN" -n {{ .Release.Namespace }}
+              echo "Updating headscale-api-token secret with generated API token..."
+              kubectl patch secret headscale-api-token -n {{ .Release.Namespace }} -p="{\"data\":{\"HEADPLANE_OIDC__HEADSCALE_API_KEY\":\"$(echo -n "$TOKEN" | base64)\"}}"
+              
+              echo "Successfully updated headscale-api-token secret with real API token"
