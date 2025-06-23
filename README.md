@@ -48,14 +48,14 @@ helm uninstall headplane
 | headplane.config.server.port | int | `3000` |  |
 | headplane.envFrom | list | `[]` |  |
 | headplane.image | string | `"ghcr.io/tale/headplane:0.6.0"` |  |
-| headplane.oidc.client_id | string | `"REPLACE_IT_WITH_YOUR_OIDC_CLIENT_ID_FOR_HEADPLANE"` |  |
+| headplane.oidc.client_id | string | `"PLACEHOLDER_USE_SECRET"` |  |
 | headplane.oidc.disable_api_key_login | bool | `true` |  |
 | headplane.oidc.enabled | bool | `false` |  |
 | headplane.oidc.issuer | string | `"https://your-oidc-issuer-url.com"` |  |
 | headplane.oidc.redirect_uri | string | `"https://your-headplane-admin-domain.com/admin/oidc/callback"` |  |
 | headplane.oidc.secret_name | string | `"oidc-secrets"` |  |
 | headplane.oidc.token_endpoint_auth_method | string | `"client_secret_post"` |  |
-| headscale.acl | string | `""` |  |
+| headscale.acl | string | `"{\n  \"acls\": []\n}\n"` |  |
 | headscale.config.database.debug | bool | `false` |  |
 | headscale.config.database.sqlite.path | string | `"/etc/headscale/db.sqlite"` |  |
 | headscale.config.database.type | string | `"sqlite"` |  |
