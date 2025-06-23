@@ -44,11 +44,11 @@ spec:
             echo "Job completed successfully, starting headplane..."
             exec node /app/build/server/index.js
         envFrom:
+          - secretRef:
+              name: headscale-api-token
           {{- if .Values.headplane.oidc.enabled }}
           - secretRef:
               name: {{ .Values.headplane.oidc.secret_name }}
-          - secretRef:
-              name: headscale-api-token
               # optional: true
           {{- end }}
           {{- with .Values.headplane.envFrom }}
