@@ -49,7 +49,6 @@ spec:
           {{- if .Values.headplane.oidc.enabled }}
           - secretRef:
               name: {{ .Values.headplane.oidc.secret_name }}
-              # optional: true
           {{- end }}
           {{- with .Values.headplane.envFrom }}
           {{- toYaml . | nindent 10 }}

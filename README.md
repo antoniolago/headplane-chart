@@ -90,6 +90,8 @@ helm uninstall headplane
 | headscale.oidc.client_id | string | `"YOUR_OIDC_CLIENT_ID_FOR_HEADSCALE"` |  |
 | headscale.oidc.enabled | bool | `false` |  |
 | headscale.oidc.issuer | string | `"https://your-oidc-issuer.com"` |  |
+| headscale.oidc.pkce.enabled | bool | `false` |  |
+| headscale.oidc.pkce.method | string | `"S256"` |  |
 | headscale.oidc.secret_name | string | `"oidc-secrets"` |  |
 | ingress.annotations | list | `[]` |  |
 | ingress.className | string | `"nginx"` |  |
