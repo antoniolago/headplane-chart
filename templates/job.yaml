@@ -23,10 +23,21 @@ spec:
                 sleep 1
               done
 
-              echo "Checking if Secret 'headscale-api-token' exists..."
+              echo "Checking if API token needs to be generated..."
               if kubectl get secret headscale-api-token -n {{ .Release.Namespace }} >/dev/null 2>&1; then
-                echo "Secret already exists. Skipping token generation."
-                exit 0
+                CURRENT_TOKEN=$(kubectl get secret headscale-api-token -n {{ .Release.Namespace }} -o jsonpath='{.data.HEADPLANE_OIDC__HEADSCALE_API_KEY}' | base64 -d)
+                echo "Current token value: '$CURRENT_TOKEN'"
+                echo "Current token length: ${#CURRENT_TOKEN}"
+                echo "Expected placeholder: 'placeholder-token-will-be-replaced-by-job'"
+                echo "Expected length: 42"
+                if [[ "$CURRENT_TOKEN" != "placeholder-token-will-be-replaced-by-job" ]]; then
+                  echo "Real API token already exists. Skipping token generation."
+                  exit 0
+                else
+                  echo "Placeholder token found. Generating real API token..."
+                fi
+              else
+                echo "Secret not found. Generating API token..."
               fi
 
               echo "Generating Headscale API token..."
