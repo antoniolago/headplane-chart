@@ -51,7 +51,7 @@ spec:
               name: {{ .Values.headplane.oidc.secret_name }}
           - secretRef:
               name: headscale-api-token
-              optional: true
+              # optional: true
           {{- end }}
           {{- with .Values.headplane.envFrom }}
           {{- toYaml . | nindent 10 }}
