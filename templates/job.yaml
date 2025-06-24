@@ -37,7 +37,7 @@ spec:
                   echo "Real API token already exists. Skipping token generation."
                   exit 0
                 else
-                  echo "Placeholder token found. Generating prod API token..."
+                  echo "Placeholder token found. Generating real API token..."
                 fi
               else
                 echo "Secret not found. Generating API token..."
